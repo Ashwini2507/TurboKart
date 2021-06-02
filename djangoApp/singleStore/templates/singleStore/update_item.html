@@ -1,0 +1,110 @@
+{%  extends 'singleStore/admin_base.html' %}
+
+{% block content %}
+
+
+    <div class="col-md-9 mb-5">
+{% comment %}    <div class="card card-body"> {% endcomment %}
+    <h4 class="d-flex justify-content-between align-items-center mt-4 mb-3">
+    <strong><span class="text-bold">View and Update Product</span></strong>
+    </h4>
+    <form action="" method="POST">
+
+        {% csrf_token %}
+        {{ form.management_form }}
+        
+        <hr>
+	<h5 class="d-flex justify-content-between align-items-center mt-2 mb-2">	
+	<strong><span class="text-bold">Name and Visibility</span></strong>
+	</h5>
+        <hr>
+	<h6 class="d-flex justify-content-between align-items-center mt-4 mb-3">
+	<span class="text-bold">Title </span>
+	</h6>
+        {{form.title}}
+        <h6 class="d-flex justify-content-between align-items-center mt-4 mb-3">
+        <span class="text-bold">Status</span>
+        </h6>
+	{{form.status}}
+        <h6 class="d-flex justify-content-between align-items-center mt-4 mb-3">
+        <span class="text-bold">Product URL</span>
+        </h6>
+	{{form.slug}}
+        <br><br>
+
+        <hr>
+        <h5 class="d-flex justify-content-between align-items-center mt-2 mb-2">
+        <strong><span class="text-bold">Product Attributes</span></strong>
+        </h5>
+        <hr>
+        <h6 class="d-flex justify-content-between align-items-center mt-4 mb-3">
+        <span class="text-bold">SKU</span>
+        </h6>
+	{{form.SKU}}
+        <h6 class="d-flex justify-content-between align-items-center mt-4 mb-3">
+        <span class="text-bold">Price (₹)</span>
+        </h6>
+	{{form.price}}
+        <h6 class="d-flex justify-content-between align-items-center mt-4 mb-3">
+        <span class="text-bold">Discount Price</span>
+        </h6>
+	{{form.discounted_price}}
+        <h6 class="d-flex justify-content-between align-items-center mt-4 mb-3">
+        <span class="text-bold">HSN Code</span>
+        </h6>
+	{{form.HSN}}
+        <h6 class="d-flex justify-content-between align-items-center mt-4 mb-3">
+        <span class="text-bold">Tax Class</span>
+        </h6>
+	{{form.Tax_Rate}}
+        <br><br>
+
+        <hr>
+        <h5 class="d-flex justify-content-between align-items-center mt-2 mb-2">
+        <strong><span class="text-bold">Product Associations</span></strong>
+        </h5>
+	<hr>
+        <h6 class="d-flex justify-content-between align-items-center mt-4 mb-3">
+        <span class="text-bold">Categories</span>
+        </h6>
+	{{form.category}}
+        <h6 class="d-flex justify-content-between align-items-center mt-4 mb-3">
+        <span class="text-bold">Brand</span>
+        </h6>
+	{{form.brand}}
+        <br><br>
+
+        <hr>
+        <h5 class="d-flex justify-content-between align-items-center mt-4 mb-3">
+        <strong><span class="text-bold">Product Display and Promotions</span></strong>
+        </h5>
+	<hr>
+        <h6 class="d-flex justify-content-between align-items-center mt-4 mb-3">
+        <span class="text-bold">Display Image</span>
+        </h6>
+        {{form.image}}
+        <h6 class="d-flex justify-content-between align-items-center mt-4 mb-3">
+        <span class="text-bold">Product Description</span>
+        </h6>
+        {{form.description}}
+        <h6 class="d-flex justify-content-between align-items-center mt-4 mb-3">
+        <span class="text-bold">Discount Price (₹)</span>
+        </h6>
+        {{form.discount_price}}
+        <h6 class="d-flex justify-content-between align-items-center mt-4 mb-3">
+        <span class="text-bold">Display Label</span>
+        </h6>
+	{{form.label}}
+        <br><br>
+
+        <hr>
+
+        <input type="submit" name="Submit">
+   </form>
+
+{% comment %}   </div> {% endcomment %}
+</div>
+
+
+{% endblock %}
+

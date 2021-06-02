@@ -1,0 +1,45 @@
+{% load static %}
+  
+<!--<script type="text/javascript" src="{% static '/store/js/jquery-3.3.1.min.js' %}"></script>-->
+<!--<script type="text/javascript" src="{% static 'store/js/popper.min.js' %}"></script>-->
+<!--<script type="text/javascript" src="{% static 'store/js/bootstrap.min.js' %}"></script>-->
+<!--<script type="text/javascript" src="{% static 'store/js/mdb.min.js' %}"></script>-->
+<!--<script type="text/javascript">-->
+
+<!-- JQuery -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/js/mdb.min.js"></script>
+
+<script>
+
+$('.components').on('click','li',function(){
+   $('.components li.active').removeClass('active');
+   $(this).addClass('active')
+});
+
+</script>
+<script>
+function showPassword() {
+  var x = document.getElementById("password");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+</script>
+
+<!-- WOW JavaScript -->
+<!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"></script>-->
+
+<!--<script>-->
+
+  <!-- Animations initialization-->
+  <!--new WOW().init();-->
+
+<!--</script>-->

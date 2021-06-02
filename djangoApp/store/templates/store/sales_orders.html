@@ -1,0 +1,38 @@
+{% extends "store/admin_base.html" %}
+{% block content %}
+	<div class =  "col-md-12 , mt-3" id="admin-content">
+		<h4>ALL ORDERS</h4>
+                <div class = "mt-4 , mb-4">
+		    <form method="get">
+        		{{ filter.form }}
+        		<input type="submit" />
+    		    </form>
+                </div>
+			<table class="table-responsive table-sm">
+				<tr>
+                                        <th>Reference ID</th>
+                                        <th>Store</th>
+					<th>Bill-To Name</th>
+                                        <th>Ship-To Name</th>
+					<th>Date Orderd</th>
+					<th>Total Amount</th>
+					<th>Status</th>
+					<th>View</th>
+				</tr>
+
+				{% for order in filter.qs %}
+					<tr>
+						<td>{{order.ref_code}}</td>
+                                                <td>{{order.store_front.name}}</td>
+						<td>{{order.billing_address.name}}</td>
+                                                <td>{{order.shipping_address.name}}</td>
+						<td>{{order.ordered_date}}</td>
+                                                <td>₹{{order.get_total}}</td>
+                                                <td>{{order.status}}</td>
+                                                <td><a class="btn btn-sm btn-info" href="{% url 'store:update_order' order.id %}">View</a></td>
+
+					</tr>
+				{% endfor %}     
+			</table>
+	</div>
+{% endblock %}

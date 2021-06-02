@@ -1,0 +1,35 @@
+{% extends "singleStore/admin_base.html" %}
+{% block content %}
+<div class = "col-md-12 , mt-3">
+		<h4>ALL SHIPMENTS</h4>
+			<table class="table-responsive table-sm">
+				<tr>
+                                        <th>Shipment ID</th>
+                                        <th>Order ID</th>
+					<th>Bill-To Name</th>
+					<th>Order Date</th>
+                                        <th>Shipment Date</th>
+					<th>Carrier Name</th>
+                                        <th>Tracking Number</th>
+					<th>View</th>
+				</tr>
+
+				{% for shipment in shipments %}
+					<tr>
+						<td>{{shipment.ref_code}}</td>
+                                                <td>{{shipment.order.ref_code}}</td>
+						<td>{{shipment.order.billing_address.name}}</td>
+						<td>{{shipment.order.ordered_date}}</td>
+                                                <td>{{shipment.shipment_date}}</td>
+                                                <td>{{shipment.carrier}}</td>
+						<td>{{shipment.shipment_id}}</td>
+                                                <td><a class="btn btn-sm btn-info" href="{% url 'singleStore:view_shipment' shipment.id %}">View</a></td>
+
+					</tr>
+				{% endfor %}
+
+		
+			</table>
+</div>
+
+{% endblock %}

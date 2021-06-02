@@ -1,0 +1,40 @@
+{% extends "store/base.html" %}
+{% block content %}
+<div class = "col-md-12 , mt-3">
+		<h4>ALL REFUNDS</h4>
+		<hr>
+		<div class="card card-body">
+			
+			<table class="table table-sm">
+				<tr>
+                                        <th>Refund ID</th>
+                                        <th>Order ID</th>
+					<th>Bill-To Name</th>
+					<th>Order Date</th>
+                                        <th>Refund Date</th>
+					<th>Refund Method</th>
+                                        <th>Refund ID</th>
+					<th>View</th>
+				</tr>
+
+				{% for refund in refunds %}
+					<tr>
+						<td>{{refund.ref_code}}</td>
+                                                <td>{{refund.order.ref_code}}</td>
+						<td>{{refund.order.billing_address.name}}</td>
+						<td>{{refund.order.ordered_date}}</td>
+                                                <td>{{refund.refund_date}}</td>
+                                                <td>{{refund.refund_method}}</td>
+						<td>{{refund.refund_id}}</td>
+                                                <td><a class="btn btn-sm btn-info" href="{% url 'store:view_refund' refund.id %}">View</a></td>
+
+					</tr>
+				{% endfor %}
+
+		
+			</table>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

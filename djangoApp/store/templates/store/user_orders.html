@@ -1,0 +1,126 @@
+{% extends "store/base.html" %}
+{% block content %}
+<div class="col-md-6 mb-4 mt-4">
+    <h1 class="mb-3">All Orders ({{page_obj.paginator.count}})</h1>
+    {% for order in orders %}
+    {% if order.ordered %}
+    <div class="card">
+    <h4 class="d-flex justify-content-between align-items-center mt-4 mb-3 ml-3">
+    <span class="text-bold">Order Number: {{order.ref_code}}</span>
+    </h4>
+    <h5 class="d-flex justify-content-between align-items-center mb-3 ml-3">
+    <span class="text-bold">Order Date: {{order.ordered_date}}</span>
+    </h5>
+    <h5 class="d-flex justify-content-between align-items-center mb-3 ml-3">
+    <span class="text-bold">Status: {{order.status}}</span>
+    </h5>
+    <div class = "row">
+    <div class = "col-md-4">
+    {% ifnotequal order.invoice_status "Not Invoiced" %}
+    <h5 class="d-flex justify-content-between align-items-center ml-2 mb-3">
+    <a href="{% url 'store:order_invoices' order.ref_code%}" class="btn btn-outline-info" role="button">View Invoices</a>
+    </h5>
+    {% endifnotequal %}
+    </div>
+    <div class = "col-md-6">
+    {% if order.status == "Shipped" %}
+    <h5 class="d-flex justify-content-between align-items-center mb-3">
+    <span class="text-bold"><a href="{% url 'store:order_shipments' order.ref_code%}" class="btn btn-outline-info" role="button">View Shipments</a></span>
+    </h5>
+    {% endif %}
+    </div>
+    </div>
+    <h5 class="d-flex justify-content-between align-items-center mb-3 ml-3">
+    <span class="text-bold">Order Details</span>
+    </h5>
+    <ul class="list-group mb-3 z-depth-1">
+    {% for order_item in order.items.all %}
+    <li class="list-group-item d-flex justify-content-between lh-condensed">
+        <div>
+        <h6 class="my-0">{{ order_item.quantity }} x {{ order_item.item.title}}</h6>
+        </div>
+        <span class="text-muted">₹{{ order_item.get_final_price }}</span>
+    </li>
+    {% endfor %}
+    <li class="list-group-item d-flex justify-content-between">
+        <h6 class="my-0">GST (INR)</h6>
+        <span class="text-muted">₹{{ order.get_total_tax }}</span>
+    </li>
+    {% if order.coupon %}
+    <li class="list-group-item d-flex justify-content-between bg-light">
+        <div class="text-success">
+        <h6 class="my-0">Promo code</h6>
+        <small>{{ order.coupon.code }}</small>
+        </div>
+        <span class="text-success">-₹{{ order.coupon.amount }}</span>
+    </li>
+    {% endif %}
+    <li class="list-group-item d-flex justify-content-between">
+        <span>Total (INR)</span>
+        <strong>₹{{ order.get_total }}</strong>
+    </li>
+    </ul>
+    <div class = "row">
+    <div class = "col-md-4">
+    <h5 class="d-flex justify-content-between align-items-center ml-2 mb-3">
+    <span class="text-bold"><a href = "{% url 'store:request_refund' order.ref_code %}" class="btn btn-outline-info" role="button">Refunds</a></span>
+    </h5>
+    </div>
+    {% ifnotequal order.shipping_status "No Shipments" %}
+    <div class = "col-md-4">
+    <h5 class="d-flex justify-content-between align-items-center ml-2 mb-3">
+    <span class="text-bold"><a href = "{% url 'store:request_refund' order.ref_code %}" class="btn btn-outline-info" role="button">Replacement</a></span>
+    </h5>
+    </div>
+    {% endifnotequal %}
+    </div>    
+    {% if order.status == "Pending" %}
+    <div class = "row">
+    <div class = "col-md-4">
+    <h5 class="d-flex justify-content-between align-items-center ml-2 mb-3">
+    <span class="text-bold"><a href = "{% url 'store:request_refund' order.ref_code %}" class="btn btn-outline-danger" role="button">Report Issue</a></span>
+    </h5>
+    </div>
+    <div class = "col-md-4">
+    <h5 class="d-flex justify-content-between align-items-center ml-2 mb-3">
+    <span class="text-bold"><a href = "{% url 'store:request_refund' order.ref_code %}" class="btn btn-outline-danger" role="button">Cancel Order</a></span>
+    </h5>
+    </div>
+    </div>
+    {% endif %}
+    </div>
+
+
+    {% else %}
+    <h4 class="d-flex justify-content-between align-items-center mt-4 mb-3">
+    <span class="text-bold">Order in Cart</span>
+    </h4>
+    <ul class="list-group mb-3 z-depth-1">
+    {% for order_item in order.items.all %}
+    <li class="list-group-item d-flex justify-content-between lh-condensed">
+        <div>
+        <h6 class="my-0">{{ order_item.quantity }} x {{ order_item.item.title}}</h6>
+        </div>
+        <span class="text-muted">₹{{ order_item.get_final_price }}</span>
+    </li>
+    {% endfor %}
+    {% if order.coupon %}
+    <li class="list-group-item d-flex justify-content-between bg-light">
+        <div class="text-success">
+        <h6 class="my-0">Promo code</h6>
+        <small>{{ order.coupon.code }}</small>
+        </div>
+        <span class="text-success">-₹{{ order.coupon.amount }}</span>
+    </li>
+    {% endif %}
+    <li class="list-group-item d-flex justify-content-between">
+        <span>Total (INR)</span>
+        <strong>₹{{ order.get_total }}</strong>
+    </li>
+    </ul>
+    {% endif %}
+    <hr>
+    {% endfor %}
+</div>
+
+{% endblock %}

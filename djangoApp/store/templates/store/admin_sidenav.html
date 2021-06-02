@@ -1,0 +1,85 @@
+			<div class="menu">
+				<ul>
+					<li>
+						<a href = "#"><i class="fas fa-tachometer-alt fa-2x"></i><p class="list-name mt-1 mb-0">DASHBOARD</p></a>
+					</li>
+					<li>
+						<a href = "#"><i class="fas fa-money-bill-wave fa-2x"></i><p class="list-name mt-1 mb-0">SALES</p></a>
+						<ul>
+                                                        {% if perms.store.view_order %}
+								<li><a href = "{% url 'store:sales-orders' %}">ORDERS</a></li>
+                                                        {% endif %}
+							{% if perms.store.view_invoice %}
+								<li><a href = "{% url 'store:sales-invoices' %}">INVOICES</a></li>
+							{% endif %}
+							{% if perms.store.view_shipment %}
+								<li><a href = "{% url 'store:sales-shipments' %}">SHIPMENTS</a></li>
+							{% endif %}
+							{% if perms.store.view_refund %}
+							<li><a href = "{% url 'store:sales-refunds' %}">REFUNDS</a></li>
+							{% endif %}
+                                                        {% if perms.store.view_payment %}
+							<li><a href = "{% url 'store:sales-refunds' %}">PAYMENTS </a></li>
+                                                        {% endif %}
+						</ul>
+					</li>
+					<li><a href = "#"><i class="fas fa-box fa-2x"></i><p class="list-name mt-1 mb-0">CATALOG</p></a>
+						<ul>
+                                                        {% if perms.store.view_item %}
+							<li><a href = "{% url 'store:view_items' %}">PRODUCTS</a></li>
+                                                        {% endif %}
+                                                        {% if perms.store.view_productAttributes %}
+							<li><a href = "#">PRODUCT ATTRIBUTES</a></li>
+                                                        {% endif %}
+                                                        {% if perms.store.view_category %}
+							<li><a href = "#">CATEGORIES</a></li>
+                                                        {% endif %}
+                                                        {% if perms.store.view_brand %}
+							<li><a href = "#">BRANDS</a></li>
+                                                        {% endif %}
+						</ul>
+					</li>
+					<li><a href = "#"><i class="fas fa-address-book fa-2x"></i><p class="list-name mt-1 mb-0">CUSTOMERS</p></a>
+						<ul>
+                                                        {% if perms.auth.view_user %}
+							<li><a href = "{% url 'store:view-customers' %}">ALL CUSTOMERS</a></li>
+							{% endif %}
+							<li><a href = "#">CUSTOMER GROUPS</a></li>
+						</ul>
+					</li>
+					<li><a href = "#"><i class="fas fa-bullhorn fa-2x"></i><p class="list-name mt-1 mb-0">MARKETING</p></a>
+						<ul>
+							<li><a href = "#">COUPONS</a></li>
+							<li><a href = "#">COUPON USAGE</a></li>
+						</ul>
+					</li>
+                                        <li><a href = "#"><i class="fas fa-store-alt fa-2x"></i><p class="list-name mt-1 mb-0">STORES</p></a>
+                                                <ul>
+                                                        <li><a href = "{% url 'store:sales-orders' %}">STORE FRONTS</a></li>
+                                                        <li><a href = "{% url 'store:sales-invoices' %}">SOURCES</a></li>
+                                                        <li><a href = "{% url 'store:sales-shipments' %}">STOCKS</a></li>
+                                                        <li><a href = "{% url 'store:sales-refunds' %}">INVENTORY</a></li>
+                                                </ul>
+                                        </li>
+                                        <li><a href = "#"><i class="fas fa-headset fa-2x"></i><p class="list-name mt-1 mb-0">SUPPORT DESK</p></a>
+                                                <ul>
+                                                        <li><a href = "{% url 'store:sales-orders' %}">REFUND REQUESTS</a></li>
+                                                        <li><a href = "{% url 'store:sales-invoices' %}">REPLACEMENT REQUESTS</a></li>
+                                                        <li><a href = "{% url 'store:sales-shipments' %}">DISPUTES</a></li>
+                                                        <li><a href = "{% url 'store:sales-refunds' %}">FAILED PAYMENTS</a></li>
+                                                </ul>
+                                        </li>
+                                        <li><a href = "#"><i class="fas fa-cogs fa-2x"></i><p class="list-name mt-1 mb-0">SETTINGS</p></a>
+                                                <ul>
+                                                        <li><a href = "#">THEMES</a></li>
+                                                        <li><a href = "#">USERS</a></li>
+                                                        <li><a href = "#">TAX RATES</a></li>
+                                                </ul>
+                                        </li>
+                                        <li>
+						<a href = "#"><i class="fas fa-book-open fa-2x"></i><p class="list-name mt-1 mb-0">HELP</p></a>
+					</li>
+		
+				</ul>
+			</div>
+

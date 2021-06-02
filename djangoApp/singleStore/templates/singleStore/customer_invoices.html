@@ -1,0 +1,36 @@
+{% extends "singleStore/base.html" %}
+{% block content %}
+<div class="container">
+		<div class= "col-md-12 , mt-3">
+
+		        <h4>ALL INVOICES</h4>
+		        <hr>
+
+			<table class="table-responsive table-sm">
+				<tr>
+                                        <th>Invoice ID</th>
+                                        <th>Order ID</th>
+					<th>Order Date</th>
+                                        <th>Invoice Date</th>
+					<th>Invoice Amount</th>
+					<th>View</th>
+				</tr>
+
+				{% for invoice in invoices %}
+					<tr>
+						<td>{{invoice.ref_code}}</td>
+                                                <td>{{invoice.order.ref_code}}</td>
+						<td>{{invoice.order.ordered_date}}</td>
+                                                <td>{{invoice.invoice_date}}</td>
+                                                <td>{{invoice.get_total}}</td>
+                                                <td><a class="btn btn-sm btn-info" href="{% url 'store:customer_view_invoice' invoice.ref_code %}">View</a></td>
+
+					</tr>
+				{% endfor %}
+
+		
+			</table>
+		</div>
+</div>
+
+{% endblock %}

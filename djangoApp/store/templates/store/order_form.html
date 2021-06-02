@@ -1,0 +1,254 @@
+{%  extends 'store/admin_base.html' %}
+
+{% block content %}
+<div class="card card-body">
+      <!--Navbar-->
+      <nav class="navbar navbar-expand-lg navbar-dark mdb-color lighten-2">
+
+        <!-- Navbar brand -->
+        <span class="navbar-brand">Actions</span>
+
+        <!-- Collapse button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+          aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapsible content -->
+        <div class="collapse navbar-collapse" id="basicExampleNav">
+
+          <!-- Links -->
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">View Order
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'store:generate_invoice' order.id %}">Create Invoice</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'store:generate_shipment' order.id %}">Create Shipment</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'store:generate_refund' order.id %}">Initiate Refund</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Cancel Order</a>
+            </li>
+
+          </ul>
+        </div>
+        <!-- Collapsible content -->
+
+      </nav>
+      <!--/.Navbar-->
+    <div class="row">
+    <div class="col-md-9 mt-4">
+    <div class="card card-body">
+    <div class = "row">
+    <div class="col-md-6">
+    <h4 class="d-flex justify-content-between align-items-center mt-4 mb-3">
+    <span class="text-bold">Order Number: {{order.ref_code}}</span>
+    </h4>
+    <h6 class="d-flex justify-content-between align-items-center mb-3">
+    <span class="text-bold">Order Date: {{order.ordered_date}}</span>
+    </h6>
+    <h6 class="d-flex justify-content-between align-items-center mb-3">
+    <span class="text-bold">Status: {{order.status}}</span>
+    </h6>
+    </div>
+    <div class="col-md-6">
+    <h4 class="d-flex justify-content-between align-items-center mt-4 mb-3">
+    <span class="text-bold">Update Status</span>
+    </h4>
+    <form action="" method="POST">
+       {% csrf_token %}
+       {{ form.management_form }}
+       {% for field in form %}
+       {{field}}
+       <hr>
+       {% endfor %}
+
+       <input type="submit" name="Submit">
+    </form>
+    </div>
+    </div>
+    <hr>
+    <h4 class="d-flex justify-content-between align-items-center mt-1 mb-1">
+    <span class="text-bold">Fulfilment Status</span>
+    </h4>
+    <hr>
+    <div class = "row">
+    <div class="col-md-6">
+    <h6 class="d-flex justify-content-between align-items-center mt-1 mb-1">
+    <span class="text-bold">Invoice Status: {{order.invoice_status}}</span>
+    </h6>
+    </div>
+    <div class="col-md-6">
+    <h6 class="d-flex justify-content-between align-items-center mt-1 mb-1">
+    <span class="text-bold">Shipment Status: {{order.shipping_status}}</span>
+    </h6>
+    </div>
+    </div>
+
+    <hr>
+    <h4 class="d-flex justify-content-between align-items-center mt-1 mb-1">
+    <span class="text-bold">Complaints and Resolutions</span>
+    </h4>
+    <hr>
+    <div class = "row">
+    <div class="col-md-6">
+    <h6 class="d-flex justify-content-between align-items-center mt-1 mb-1">
+    <span class="text-bold">Refund Requests: {{order.refund_request_status}}</span>
+    </h6>
+    <h6 class="d-flex justify-content-between align-items-center mt-3 mb-1">
+    <span class="text-bold">Replacement Requests: {{order.replacement_request_status}}</span>
+    </h6>
+    </div>
+    <div class="col-md-6">
+    <h6 class="d-flex justify-content-between align-items-center mt-1 mb-1">
+    <span class="text-bold">Refund Status: {{order.refund_status}}</span>
+    </h6>
+    <h6 class="d-flex justify-content-between align-items-center mt-3 mb-1">
+    <span class="text-bold">Replacement Status: {{order.replacement_status}}</span>
+    </h6>
+    </div>
+    </div>
+
+    <hr>
+    <h4 class="d-flex justify-content-between align-items-center mt-1 mb-1">
+    <span class="text-bold">Customer Details</span>
+    </h4>
+    <hr>
+    <div class="row">
+    <div class="col-md-6">
+    <h5>Shipping Address</h5>
+        <p>
+        Name: {{order.shipping_address.name}}<br>
+        Address: {{order.shipping_address.street_address}}, {{order.shipping_address.apartment_address}}<br>
+        State: {{order.shipping_address.state}}<br>
+        Country: {{order.shipping_address.country}}<br>
+        Pin Code: {{order.shipping_address.zip}}<br>
+        </p>
+    </div>
+    <div class="col-md-6">
+    <h5>Billing Address</h5>
+        <p>
+        Name: {{order.billing_address.name}}<br>
+        Address: {{order.billing_address.street_address}}, {{order.shipping_address.apartment_address}}<br>
+        State: {{order.billing_address.state}}<br>
+        Country: {{order.billing_address.country}}<br>
+        Pin Code: {{order.billing_address.zip}}<br>
+        </p>
+    </div>
+    </div>
+    <hr>
+
+    <h4 class="d-flex justify-content-between align-items-center mt-1 mb-3">
+    <span class="text-bold">Order Details</span>
+    </h4>
+<table class="table-responsive table-sm">
+                <tr>
+                                <th>Product</th>
+                                <th>SKU</th>
+                                <th>HSN Code</th>
+                                <th>Original Price</th>
+                                <th>Discounted Price</th>
+                                <th>Quantity</th>
+                                <th>Sub Total</th>
+                                <th>GST %</th>
+                                <th>Tax Amount</th>
+                </tr>
+
+                {% for order_item in order.items.all %}
+                                <tr>
+                                                <td>{{order_item.item.title}}</td>
+                                                <td>{{order_item.item.SKU}}</td>
+                                                <td>{{order_item.item.HSN}}</td>
+                                                <td>₹{{order_item.item.price}}</td>
+                                                {% if order_item.item.discount_price %}
+                                                <td>₹{{order_item.item.discount_price}}</td>
+                                                {% else %}
+                                                <td>₹{{order_item.item.price}}</td>
+                                                {% endif %}
+                                                <td>{{order_item.quantity}}</td>
+                                                <td>₹{{order_item.get_final_price}}</td>
+                                                <td>₹{{order_item.item.Tax_Rate.rate}}%</td>
+                                                <td>₹{{order_item.get_tax_amount}}</td>
+
+                                </tr>
+                {% endfor %}
+
+
+</table>
+<hr>
+    <h4 class="d-flex justify-content-between align-items-center mt-1 mb-1">
+    <span class="text-bold">Payment Details</span>
+    </h4>
+    <hr>
+    <div class = "row">
+    <div class="col-md-6">
+    <h6 class="d-flex justify-content-between align-items-center mt-1 mb-1">
+    <span class="text-bold">Payment Mode: {{order.payment.payment_mode_name}}</span>
+    </h6>
+    </div>
+    <div class="col-md-6">
+    <h6 class="d-flex justify-content-between align-items-center mt-1 mb-1">
+    <span class="text-bold">Charge ID: {{order.payment.stripe_charge_id}}</span>
+    </h6>
+    </div>
+    </div>
+<hr>
+<div class="row">
+    <div class="col-md-6">
+    <h4 class="d-flex justify-content-between align-items-center mt-3 mb-3">
+    <span class="text-bold">Order Totals</span>
+    </h4>
+    <li class="list-group-item d-flex justify-content-between lh-condensed">
+    <h6 class="my-0">Subtotal</h6>
+    <span class="text-muted">₹{{ order.get_cart_total }}</span>
+    </li>
+    {% if order.coupon %}
+    <li class="list-group-item d-flex justify-content-between bg-light">
+        <div class="text-success">
+        <h6 class="my-0">Promo code</h6>
+        <small>{{ order.coupon.code }}</small>
+        </div>
+        <span class="text-success">-₹{{ order.coupon.amount }}</span>
+    </li>
+    {% endif %}
+    <li class="list-group-item d-flex justify-content-between">
+        <h6 class="my-0">Total GST (INR)</h6>
+        <span class="text-muted">₹{{ order.get_total_tax }}</span>
+    </li>
+    <li class="list-group-item d-flex justify-content-between">
+        <span>Total (INR)</span>
+        <strong>₹{{ order.get_total }}</strong>
+    </li>
+    </ul>
+    </div>
+</div>
+</div>
+</div>
+               <div class="col-md-3 mt-4">
+                  {%comment%}<div class="content-section">{%endcomment%}
+                    <div class="card card-body">
+                       <h4>Related Items</h4>
+                        {% comment%}<p class='text-muted'>You can put any information here you'd like.{%endcomment%}
+                          <ul class="list-group">
+
+                                <li class="list-group-item list-group-item-light">Customer</li>
+                                <li class="list-group-item list-group-item-light">Comments</li>
+                                <li class="list-group-item list-group-item-light"><a href="{% url 'store:view_invoices' order.ref_code%}">Invoices</a></li>
+                                <li class="list-group-item list-group-item-light"><a href="{% url 'store:view_shipments' order.ref_code%}">Shipments</a></li>
+                                <li class="list-group-item list-group-item-light"><a href="{% url 'store:view_refunds' order.ref_code%}">Refunds</a></li>
+                                <li class="list-group-item list-group-item-light">Replacements</li>
+                                <li class="list-group-item list-group-item-light">Disputes</li>
+
+                          </ul>
+                  </div>
+                </div>
+</div>
+{% endblock %}
+

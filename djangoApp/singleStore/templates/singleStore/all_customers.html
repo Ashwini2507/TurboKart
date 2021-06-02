@@ -1,0 +1,32 @@
+{% extends "singleStore/admin_base.html" %}
+{% block content %}
+<div class = "col-md-12 , mt-3">
+		<h4>ALL CUSTOMERS</h4>
+		<hr>
+		<div class="card card-body">
+			
+			<table class="table table-sm">
+				<tr>
+                                        <th>EMAIL</th>
+                                        <th>FULL NAME</th>
+                                        <th>PHONE NUMBER</th>
+
+				</tr>
+
+				{% for profile in profiles %}
+					<tr>
+						<td>{{profile.user.username}}</td>
+                                                <td>{{profile.user.first_name}}</td>
+                                                <td>{{profile.phone_number}}</td>
+                                               {% comment %} <td><a class="btn btn-sm btn-info" href="{% url 'store:view_shipment' shipment.id %}">View</a></td> {% endcomment %}
+
+					</tr>
+				{% endfor %}
+
+		
+			</table>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

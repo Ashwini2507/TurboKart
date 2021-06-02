@@ -1,0 +1,100 @@
+{%  extends 'store/admin_base.html' %}
+
+{% block content %}
+
+
+    <div class="col-md-9">
+    <div class="card card-body">
+    <h4 class="d-flex justify-content-between align-items-center mt-4 mb-3">
+    <span class="text-bold">Shipment Number: {{shipment.ref_code}}</span>
+    </h4>
+    <h6 class="d-flex justify-content-between align-items-center mt-4 mb-3">
+    <span class="text-bold">Order Number: {{shipment.order.ref_code}}</span>
+    </h6>
+    <h6 class="d-flex justify-content-between align-items-center mb-3">
+    <span class="text-bold">Order Date: {{shipment.order.ordered_date}}</span>
+    </h6>
+    <h6 class="d-flex justify-content-between align-items-center mb-3">
+    <span class="text-bold">Shipment Date: {{shipment.shipment_date}}</span>
+    </h6>
+    <hr>
+    <div class="row">
+    <div class="col-md-5">
+    <h5>Shipping Address</h5>
+        <p>
+        Name: {{shipment.order.shipping_address.name}}<br>
+        Address: {{shipment.order.shipping_address.street_address}}, {{shipment.order.shipping_address.apartment_address}}<br>
+        State: {{shipment.order.shipping_address.state}}<br>
+        Country: {{shipment.order.shipping_address.country}}<br>
+        Pin Code: {{shipment.order.shipping_address.zip}}<br>
+        </p>
+    </div>
+    <div class="col-md-5">
+    <h5>Billing Address</h5>
+        <p>
+        Name: {{shipment.order.billing_address.name}}<br>
+        Address: {{shipment.order.billing_address.street_address}}, {{shipment.order.shipping_address.apartment_address}}<br>
+        State: {{shipment.order.billing_address.state}}<br>
+        Country: {{shipment.order.billing_address.country}}<br>
+        Pin Code: {{shipment.order.billing_address.zip}}<br>
+        </p>
+    </div>
+    </div>
+    <hr>
+
+    <h4 class="d-flex justify-content-between align-items-center mt-3 mb-3">
+    <span class="text-bold">Shipment Details</span>
+    </h4>
+<table class="table table-sm">
+                <tr>
+                                <th>Product</th>
+                                <th>SKU</th>
+                                <th>HSN Code</th>
+                                <th>Original Price</th>
+                                <th>Discounted Price</th>
+                                <th>Shipped Quantity</th>
+                </tr>
+
+                {% for shipment_item in shipment.items.all %}
+                                <tr>
+                                                <td>{{shipment_item.item.title}}</td>
+                                                <td>{{shipment_item.item.SKU}}</td>
+                                                <td>{{shipment_item.item.HSN}}</td>
+                                                <td>₹{{shipment_item.item.price}}</td>
+                                                {% if shipment_item.item.discount_price %}
+                                                <td>₹{{shipment_item.item.discount_price}}</td>
+                                                {% else %}
+                                                <td>₹{{shipment_item.item.price}}</td>
+                                                {% endif %}
+                                                <td>{{shipment_item.quantity}}</td>
+
+                                </tr>
+                {% endfor %}
+
+
+</table>
+
+<hr>
+<h4 class="d-flex justify-content-between align-items-center mt-3 mb-3">
+<span class="text-bold">Carrier Details</span>
+</h4>
+<div class="row">
+<div class="col-md-6">
+<table class="table table-sm">
+<tr>
+<th>Carrier Name</th>
+<th>Tracking ID</th>
+</tr>
+<tr>
+<td>{{shipment.carrier}}</td>
+<td>{{shipment.shipment_id}}</th>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+
+{% endblock %}
+

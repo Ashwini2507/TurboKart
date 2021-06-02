@@ -1,0 +1,37 @@
+{% extends "store/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+	<div class= "login mx-auto">
+	<div class= "card card-body">
+                <form method= "POST">
+                        {% csrf_token %}
+			{{ form.non_field_errors }}
+                        <fieldset class= "form-group">
+			<legend class= "border-bottom mb-3">Login</legend>
+			<div class="fieldWrapper mt-3">
+				{{ form.username.errors }}
+                		<div class="input-group">
+                  			<input type='text' placeholder='Email' id='username' name='username' class='form-control' />
+                		</div>
+			</div>
+			<div class="fieldWrapper mt-4 mb-3">
+				{{ form.password.errors }}
+                		<div class="input-group">
+                  			<input type='password' placeholder='Password' id='password' name='password' class='form-control' />
+                		</div>
+                                        <!--<input type="checkbox" onclick="showPassword()"><small class="text-muted ml-1">Show Password</small>-->
+			</div>
+			</fieldset>
+                        <div class= "form-group">
+                                <button class= "btn btn-outline-info" type= "submit">Login</button>
+                        </div>
+		</form>
+                <div class= "border-top pt-3 mt-3">
+                        <small class= "text-muted">Forgot you password?<a class ="ml-1" href= "{% url 'reset_password' %}">Reset Password</a></small><br/>
+                        <small class= "text-muted">Need an account? <a class= "ml-1"  href= "{% url 'register' %}">Sign Up Now</a></small><br/>
+                </div>
+	</div>
+	</div>
+{% endblock content %}

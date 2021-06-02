@@ -1,0 +1,110 @@
+{%  extends 'store/admin_base.html' %}
+
+{% block content %}
+
+
+    <div class="col-md-9">
+    <div class="card card-body">
+    <h4 class="d-flex justify-content-between align-items-center mt-4 mb-3">
+    <span class="text-bold">Invoice Number: {{invoice.ref_code}}</span>
+    </h4>
+    <h6 class="d-flex justify-content-between align-items-center mt-4 mb-3">
+    <span class="text-bold">Order Number: {{invoice.order.ref_code}}</span>
+    </h6>
+    <h6 class="d-flex justify-content-between align-items-center mb-3">
+    <span class="text-bold">Order Date: {{invoice.order.ordered_date}}</span>
+    </h6>
+    <h6 class="d-flex justify-content-between align-items-center mb-3">
+    <span class="text-bold">Invoice Date: {{invoice.invoice_date}}</span>
+    </h6>
+    <hr>
+    <div class="row">
+    <div class="col-md-5">
+    <h5>Shipping Address</h5>
+        <p>
+        Name: {{invoice.order.shipping_address.name}}<br>
+        Address: {{invoice.order.shipping_address.street_address}}, {{invoice.order.shipping_address.apartment_address}}<br>
+        State: {{invoice.order.shipping_address.state}}<br>
+        Country: {{invoice.order.shipping_address.country}}<br>
+        Pin Code: {{invoice.order.shipping_address.zip}}<br>
+        </p>
+    </div>
+    <div class="col-md-5">
+    <h5>Billing Address</h5>
+        <p>
+        Name: {{invoice.order.billing_address.name}}<br>
+        Address: {{invoice.order.billing_address.street_address}}, {{invoice.order.shipping_address.apartment_address}}<br>
+        State: {{invoice.order.billing_address.state}}<br>
+        Country: {{invoice.order.billing_address.country}}<br>
+        Pin Code: {{invoice.order.billing_address.zip}}<br>
+        </p>
+    </div>
+    </div>
+    <hr>
+
+    <h4 class="d-flex justify-content-between align-items-center mt-3 mb-3">
+    <span class="text-bold">Invoice Details</span>
+    </h4>
+<div style="overflow-x:auto;">
+<table class="table table-sm">
+                <tr>
+                                <th>Product</th>
+                                <th>SKU</th>
+                                <th>HSN Code</th>
+                                <th>Original Price</th>
+                                <th>Discounted Price</th>
+                                <th>Quantity</th>
+                                <th>Sub Total</th>
+                                <th>GST %</th>
+                                <th>Tax Amount</th>
+                </tr>
+
+                {% for invoice_item in invoice.items.all %}
+                                <tr>
+                                                <td>{{invoice_item.item.title}}</td>
+                                                <td>{{invoice_item.item.SKU}}</td>
+                                                <td>{{invoice_item.item.HSN}}</td>
+                                                <td>₹{{invoice_item.item.price}}</td>
+                                                {% if invoice_item.item.discount_price %}
+                                                <td>₹{{invoice_item.item.discount_price}}</td>
+                                                {% else %}
+                                                <td>₹{{invoice_item.item.price}}</td>
+                                                {% endif %}
+                                                <td>{{invoice_item.quantity}}</td>
+                                                <td>₹{{invoice_item.get_final_price}}</td>
+                                                <td>₹{{invoice_item.item.Tax_Rate.rate}}%</td>
+                                                <td>₹{{invoice_item.get_tax_amount}}</td>
+
+                                </tr>
+                {% endfor %}
+
+
+</table>
+</div>
+<hr>
+<div class="row">
+    <div class="col-md-6">
+    <h4 class="d-flex justify-content-between align-items-center mt-3 mb-3">
+    <span class="text-bold">Invoice Totals</span>
+    </h4>
+    <li class="list-group-item d-flex justify-content-between lh-condensed">
+    <h6 class="my-0">Subtotal</h6>
+    <span class="text-muted">₹{{ invoice.get_invoice_total }}</span>
+    </li>
+    <li class="list-group-item d-flex justify-content-between">
+        <h6 class="my-0">Total GST (INR)</h6>
+        <span class="text-muted">₹{{ invoice.get_total_tax }}</span>
+    </li>
+    <li class="list-group-item d-flex justify-content-between">
+        <span>Total (INR)</span>
+        <strong>₹{{ invoice.get_total }}</strong>
+    </li>
+    </ul>
+    </div>
+</div>
+</div>
+</div>
+
+
+{% endblock %}
+

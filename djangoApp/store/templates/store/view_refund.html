@@ -1,0 +1,128 @@
+{%  extends 'store/admin_base.html' %}
+
+{% block content %}
+
+
+    <div class="col-md-9">
+    <div class="card card-body">
+    <h4 class="d-flex justify-content-between align-items-center mt-4 mb-3">
+    <span class="text-bold">Refund Number: {{refund.ref_code}}</span>
+    </h4>
+    <h6 class="d-flex justify-content-between align-items-center mt-4 mb-3">
+    <span class="text-bold">Order Number: {{refund.order.ref_code}}</span>
+    </h6>
+    <h6 class="d-flex justify-content-between align-items-center mb-3">
+    <span class="text-bold">Order Date: {{refund.order.ordered_date}}</span>
+    </h6>
+    <h6 class="d-flex justify-content-between align-items-center mb-3">
+    <span class="text-bold">Refund Date: {{refund.invoice_date}}</span>
+    </h6>
+    <hr>
+    <div class="row">
+    <div class="col-md-5">
+    <h5>Shipping Address</h5>
+        <p>
+        Name: {{refund.order.shipping_address.name}}<br>
+        Address: {{refund.order.shipping_address.street_address}}, {{refund.order.shipping_address.apartment_address}}<br>
+        State: {{refund.order.shipping_address.state}}<br>
+        Country: {{refund.order.shipping_address.country}}<br>
+        Pin Code: {{refund.order.shipping_address.zip}}<br>
+        </p>
+    </div>
+    <div class="col-md-5">
+    <h5>Billing Address</h5>
+        <p>
+        Name: {{refund.order.billing_address.name}}<br>
+        Address: {{refund.order.billing_address.street_address}}, {{refund.order.shipping_address.apartment_address}}<br>
+        State: {{refund.order.billing_address.state}}<br>
+        Country: {{refund.order.billing_address.country}}<br>
+        Pin Code: {{refund.order.billing_address.zip}}<br>
+        </p>
+    </div>
+    </div>
+    <hr>
+
+    <h4 class="d-flex justify-content-between align-items-center mt-3 mb-3">
+    <span class="text-bold">Refund Details</span>
+    </h4>
+<table class="table table-sm">
+                <tr>
+                                <th>Product</th>
+                                <th>SKU</th>
+                                <th>HSN Code</th>
+                                <th>Original Price</th>
+                                <th>Discounted Price</th>
+                                <th>Refund Quantity</th>
+                                <th>Sub Total</th>
+                                <th>GST %</th>
+                                <th>Tax Amount</th>
+                </tr>
+
+                {% for refund_item in refund.items.all %}
+                                <tr>
+                                                <td>{{refund_item.item.title}}</td>
+                                                <td>{{refund_item.item.SKU}}</td>
+                                                <td>{{refund_item.item.HSN}}</td>
+                                                <td>₹{{refund_item.item.price}}</td>
+                                                {% if refund_item.item.discount_price %}
+                                                <td>₹{{refund_item.item.discount_price}}</td>
+                                                {% else %}
+                                                <td>₹{{refund_item.item.price}}</td>
+                                                {% endif %}
+                                                <td>{{refund_item.quantity}}</td>
+                                                <td>₹{{refund_item.get_final_price}}</td>
+                                                <td>₹{{refund_item.item.Tax_Rate.rate}}%</td>
+                                                <td>₹{{refund_item.get_tax_amount}}</td>
+
+                                </tr>
+                {% endfor %}
+
+
+</table>
+
+<hr>
+<div class="row">
+    <div class="col-md-6">
+    <h4 class="d-flex justify-content-between align-items-center mt-3 mb-3">
+    <span class="text-bold">Refund Totals</span>
+    </h4>
+    <li class="list-group-item d-flex justify-content-between lh-condensed">
+    <h6 class="my-0">Subtotal</h6>
+    <span class="text-muted">₹{{ refund.get_refund_total }}</span>
+    </li>
+    <li class="list-group-item d-flex justify-content-between">
+        <h6 class="my-0">Total GST (INR)</h6>
+        <span class="text-muted">₹{{refund.get_total_tax }}</span>
+    </li>
+    <li class="list-group-item d-flex justify-content-between">
+        <span>Total (INR)</span>
+        <strong>₹{{ refund.get_total }}</strong>
+    </li>
+    </ul>
+    </div>
+</div>
+<hr>
+<h4 class="d-flex justify-content-between align-items-center mt-3 mb-3">
+<span class="text-bold">Refund Transaction Details</span>
+</h4>
+<div class="row">
+<div class="col-md-6">
+<table class="table table-sm">
+<tr>
+<th>Refund Method</th>
+<th>Refund ID</th>
+</tr>
+<tr>
+<td>{{refund.refund_method}}</td>
+<td>{{refund.refund_id}}</th>
+</tr>
+</table>
+</div>
+</div>
+
+        </div>
+</div>
+
+
+{% endblock %}
+
